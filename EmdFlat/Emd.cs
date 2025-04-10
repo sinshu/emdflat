@@ -6,8 +6,8 @@ namespace EmdFlat
     {
         private static readonly int MAX_SIG_SIZE = 100;
         private static readonly int MAX_ITERATIONS = 500;
-        private static readonly float INFINITY = (float)1e20;
-        private static readonly float EPSILON = (float)1e-6;
+        private static readonly double INFINITY = 1e40;
+        private static readonly double EPSILON = 1e-12;
 
         private static readonly int MAX_SIG_SIZE1 = MAX_SIG_SIZE + 1;
 
@@ -18,7 +18,7 @@ namespace EmdFlat
         private int _n2;
 
         /* THE COST MATRIX */
-        private float[][] _C = CreateJaggedArray<float>(MAX_SIG_SIZE1, MAX_SIG_SIZE1);
+        private double[][] _C = CreateJaggedArray<double>(MAX_SIG_SIZE1, MAX_SIG_SIZE1);
 
         /* THE BASIC VARIABLES VECTOR */
         private node2_t[] managed_X = new node2_t[MAX_SIG_SIZE1 * 2];
@@ -30,7 +30,7 @@ namespace EmdFlat
         private node2_t*[] _RowsX = new node2_t*[MAX_SIG_SIZE1];
         private node2_t*[] _ColsX = new node2_t*[MAX_SIG_SIZE1];
         private double _maxW;
-        private float _maxC;
+        private double _maxC;
 
         private node1_t[] managed_U = new node1_t[MAX_SIG_SIZE1];
         private node1_t[] managed_V = new node1_t[MAX_SIG_SIZE1];
@@ -45,7 +45,7 @@ namespace EmdFlat
         private node1_t[] managed_Ur = new node1_t[MAX_SIG_SIZE1];
         private node1_t[] managed_Vr = new node1_t[MAX_SIG_SIZE1];
 
-        public float emd<feature_t>(
+        public double emd<feature_t>(
             signature_t<feature_t> Signature1, signature_t<feature_t> Signature2,
             Callback<feature_t> Dist,
             flow_t* Flow, int* FlowSize)
@@ -56,7 +56,7 @@ namespace EmdFlat
             {
                 int itr;
                 double totalCost;
-                float w;
+                double w;
                 node2_t* XP;
                 flow_t* FlowP = null;
 
@@ -100,7 +100,7 @@ namespace EmdFlat
                     {
                         FlowP->from = XP->i;
                         FlowP->to = XP->j;
-                        FlowP->amount = (float)XP->val;
+                        FlowP->amount = XP->val;
                         FlowP++;
                     }
                 }
@@ -108,11 +108,11 @@ namespace EmdFlat
                     *FlowSize = (int)(FlowP - Flow);
 
                 /* RETURN THE NORMALIZED COST == EMD */
-                return (float)(totalCost / w);
+                return totalCost / w;
             }
         }
 
-        private float init<feature_t>(
+        private double init<feature_t>(
             signature_t<feature_t> Signature1, signature_t<feature_t> Signature2,
             Callback<feature_t> Dist)
         {
@@ -192,7 +192,7 @@ namespace EmdFlat
 
                 _EnterX = _EndX++;  /* AN EMPTY SLOT (ONLY _n1+_n2-1 BASIC VARIABLES) */
 
-                return (float)(sSum > dSum ? dSum : sSum);
+                return sSum > dSum ? dSum : sSum;
             }
         }
 
@@ -531,7 +531,7 @@ namespace EmdFlat
                 for (i = 0; i < _n1; i++)
                     for (j = 0; j < _n2; j++)
                     {
-                        float v;
+                        double v;
                         v = _C[i][j];
                         if (Ur[i].val <= v)
                             Ur[i].val = v;

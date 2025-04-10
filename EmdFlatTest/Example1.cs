@@ -24,8 +24,8 @@ namespace EmdFlatTest
                 new(255, 255, 255),
             ];
 
-            float[] w1 = [0.4F, 0.3F, 0.2F, 0.1F];
-            float[] w2 = [0.5F, 0.3F, 0.2F];
+            double[] w1 = [0.4, 0.3, 0.2, 0.1];
+            double[] w2 = [0.5, 0.3, 0.2];
 
             var s1 = new signature_t<Vector3>(4, f1, w1);
             var s2 = new signature_t<Vector3>(3, f2, w2);
