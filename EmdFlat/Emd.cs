@@ -78,7 +78,7 @@ namespace EmdFlat
                     }
 
                     if (itr == MAX_ITERATIONS)
-                        throw new Exception($"Maximum number of iterations has been reached ({MAX_ITERATIONS}).");
+                        throw new EmdException($"Maximum number of iterations has been reached ({MAX_ITERATIONS}).");
                 }
 
                 /* COMPUTE THE TOTAL FLOW */
@@ -128,7 +128,7 @@ namespace EmdFlat
 
                 if (_n1 > MAX_SIG_SIZE || _n2 > MAX_SIG_SIZE)
                 {
-                    throw new Exception("Signature size is limited to {MAX_SIG_SIZE}.");
+                    throw new EmdException("Signature size is limited to {MAX_SIG_SIZE}.");
                 }
 
                 /* COMPUTE THE DISTANCE MATRIX */
@@ -302,7 +302,7 @@ namespace EmdFlat
                 }
                 if (!found)
                 {
-                    throw new Exception("Unexpected error in findBasicVariables.");
+                    throw new EmdException("Unexpected error in findBasicVariables.");
                 }
             }
         }
@@ -329,7 +329,7 @@ namespace EmdFlat
 
             if (deltaMin == INFINITY)
             {
-                throw new Exception("Unexpected error in isOptimal.");
+                throw new EmdException("Unexpected error in isOptimal.");
             }
 
             _EnterX->i = minI;
@@ -484,7 +484,7 @@ namespace EmdFlat
 
                 if (CurX == Loop)
                 {
-                    throw new Exception("Unexpected error in findLoop.");
+                    throw new EmdException("Unexpected error in findLoop.");
                 }
 
                 return steps;
