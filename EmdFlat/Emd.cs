@@ -515,7 +515,7 @@ namespace EmdFlat
                     CurU->Next = CurU + 1;
                     CurU++;
                 }
-  (--CurU)->Next = null;
+                (--CurU)->Next = null;
 
                 vHead.Next = CurV = Vr;
                 for (j = 0; j < _n2; j++)
@@ -525,7 +525,7 @@ namespace EmdFlat
                     CurV->Next = CurV + 1;
                     CurV++;
                 }
-  (--CurV)->Next = null;
+                (--CurV)->Next = null;
 
                 /* FIND THE MAXIMUM ROW AND COLUMN VALUES (Ur[i] AND Vr[j]) */
                 for (i = 0; i < _n1; i++)
