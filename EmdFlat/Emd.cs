@@ -47,7 +47,7 @@ namespace EmdFlat
 
         public double emd<feature_t>(
             signature_t<feature_t> Signature1, signature_t<feature_t> Signature2,
-            Callback<feature_t> Dist,
+            Func<feature_t, feature_t, double> Dist,
             flow_t* Flow, int* FlowSize)
         {
             fixed (node2_t* _X = managed_X)
@@ -114,7 +114,7 @@ namespace EmdFlat
 
         private double init<feature_t>(
             signature_t<feature_t> Signature1, signature_t<feature_t> Signature2,
-            Callback<feature_t> Dist)
+            Func<feature_t, feature_t, double> Dist)
         {
             fixed (node2_t* _X = managed_X)
             fixed (double* S = managed_S)
