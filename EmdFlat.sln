@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35617.110 d17.13
+VisualStudioVersion = 17.13.35617.110
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmdFlat", "EmdFlat\EmdFlat.csproj", "{92C7AB38-D79F-4D90-973A-F548542A7215}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workspace", "Workspace\Workspace.csproj", "{8DCEA4C5-4EE5-4EF0-9229-7890EF9AC38A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmdFlatTest", "EmdFlatTest\EmdFlatTest.csproj", "{55186BB3-A88F-446F-8D5C-B058996BCCD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{8DCEA4C5-4EE5-4EF0-9229-7890EF9AC38A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DCEA4C5-4EE5-4EF0-9229-7890EF9AC38A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DCEA4C5-4EE5-4EF0-9229-7890EF9AC38A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55186BB3-A88F-446F-8D5C-B058996BCCD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55186BB3-A88F-446F-8D5C-B058996BCCD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55186BB3-A88F-446F-8D5C-B058996BCCD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55186BB3-A88F-446F-8D5C-B058996BCCD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
