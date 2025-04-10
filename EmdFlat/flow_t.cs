@@ -2,7 +2,7 @@
 
 namespace EmdFlat
 {
-    public sealed class flow_t
+    public struct flow_t
     {
         public int from;      /* Feature number in signature 1 */
         public int to;        /* Feature number in signature 2 */
