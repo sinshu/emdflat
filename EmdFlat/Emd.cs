@@ -65,7 +65,7 @@ namespace EmdFlat
                     }
 
                     if (itr == MAX_ITERATIONS)
-                        throw new Exception("emd: Maximum number of iterations has been reached (%d)");
+                        throw new Exception($"Maximum number of iterations has been reached ({MAX_ITERATIONS}).");
                 }
 
                 /* COMPUTE THE TOTAL FLOW */
