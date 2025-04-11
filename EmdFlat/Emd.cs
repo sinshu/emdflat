@@ -4,12 +4,9 @@ namespace EmdFlat
 {
     public sealed unsafe class Emd
     {
-        private static readonly int MAX_SIG_SIZE = 100;
         private static readonly int MAX_ITERATIONS = 500;
         private static readonly double INFINITY = 1e40;
         private static readonly double EPSILON = 1e-12;
-
-        private static readonly int MAX_SIG_SIZE1 = MAX_SIG_SIZE + 1;
 
         /* GLOBAL VARIABLE DECLARATION */
 
@@ -18,32 +15,56 @@ namespace EmdFlat
         private int _n2;
 
         /* THE COST MATRIX */
-        private double[][] _C = CreateJaggedArray<double>(MAX_SIG_SIZE1, MAX_SIG_SIZE1);
+        private double[][] _C;
 
         /* THE BASIC VARIABLES VECTOR */
-        private node2_t[] managed_X = new node2_t[MAX_SIG_SIZE1 * 2];
+        private node2_t[] managed_X;
 
         /* VARIABLES TO HANDLE _X EFFICIENTLY */
         private node2_t* _EndX;
         private node2_t* _EnterX;
-        private bool[][] _IsX = CreateJaggedArray<bool>(MAX_SIG_SIZE1, MAX_SIG_SIZE1);
-        private node2_t*[] _RowsX = new node2_t*[MAX_SIG_SIZE1];
-        private node2_t*[] _ColsX = new node2_t*[MAX_SIG_SIZE1];
+        private bool[][] _IsX;
+        private node2_t*[] _RowsX;
+        private node2_t*[] _ColsX;
         private double _maxW;
         private double _maxC;
 
-        private node1_t[] managed_U = new node1_t[MAX_SIG_SIZE1];
-        private node1_t[] managed_V = new node1_t[MAX_SIG_SIZE1];
+        private node1_t[] managed_U;
+        private node1_t[] managed_V;
 
-        private double[] managed_S = new double[MAX_SIG_SIZE1];
-        private double[] managed_D = new double[MAX_SIG_SIZE1];
+        private double[] managed_S;
+        private double[] managed_D;
 
-        private node2_t*[] managed_Loop = new node2_t*[2 * MAX_SIG_SIZE1];
+        private node2_t*[] managed_Loop;
 
-        private bool[] managed_IsUsed = new bool[2 * MAX_SIG_SIZE1];
+        private bool[] managed_IsUsed;
 
-        private node1_t[] managed_Ur = new node1_t[MAX_SIG_SIZE1];
-        private node1_t[] managed_Vr = new node1_t[MAX_SIG_SIZE1];
+        private node1_t[] managed_Ur;
+        private node1_t[] managed_Vr;
+
+        private double[][] Delta;
+
+        public Emd(int n1, int n2)
+        {
+            var p1 = n1 + 1;
+            var p2 = n2 + 1;
+            var max = Math.Max(p1, p2);
+
+            _C = CreateJaggedArray<double>(p1, p2);
+            managed_X = new node2_t[max * 2];
+            _IsX = CreateJaggedArray<bool>(p1, p2);
+            _RowsX = new node2_t*[max];
+            _ColsX = new node2_t*[max];
+            managed_U = new node1_t[max];
+            managed_V = new node1_t[max];
+            managed_S = new double[max];
+            managed_D = new double[max];
+            managed_Loop = new node2_t*[2 * max];
+            managed_IsUsed = new bool[2 * max];
+            managed_Ur = new node1_t[max];
+            managed_Vr = new node1_t[max];
+            Delta = CreateJaggedArray<double>(p1, p2);
+        }
 
         public double emd<feature_t>(
             signature_t<feature_t> Signature1, signature_t<feature_t> Signature2,
@@ -125,11 +146,6 @@ namespace EmdFlat
 
                 _n1 = Signature1.n;
                 _n2 = Signature2.n;
-
-                if (_n1 > MAX_SIG_SIZE || _n2 > MAX_SIG_SIZE)
-                {
-                    throw new EmdException("Signature size is limited to {MAX_SIG_SIZE}.");
-                }
 
                 /* COMPUTE THE DISTANCE MATRIX */
                 _maxC = 0;
@@ -499,7 +515,6 @@ namespace EmdFlat
                 int i, j, minI = 0, minJ = 0;
                 bool found;
                 double deltaMin, oldVal, diff;
-                double[][] Delta = CreateJaggedArray<double>(MAX_SIG_SIZE1, MAX_SIG_SIZE1);
                 node1_t uHead;
                 node1_t* CurU, PrevU;
                 node1_t vHead;

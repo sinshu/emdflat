@@ -30,7 +30,7 @@ namespace EmdFlatTest
             var s1 = new signature_t<Vector3>(4, f1, w1);
             var s2 = new signature_t<Vector3>(3, f2, w2);
 
-            var emd = new Emd();
+            var emd = new Emd(s1.n, s2.n);
             var actual = emd.emd(s1, s2, (x, y) => (x - y).Length(), null, null);
 
             var expected = 160.542770;

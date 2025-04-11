@@ -25,7 +25,7 @@ public static class Program
         flow_t[] flow = new flow_t[7];
         int flowSize = 0;
 
-        var emd = new Emd();
+        var emd = new Emd(s1.n, s2.n);
         double value;
         fixed (flow_t* p = flow)
         {
