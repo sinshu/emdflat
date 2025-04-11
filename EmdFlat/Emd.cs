@@ -1,4 +1,7 @@
-﻿using System;
+﻿// This implementation is based on the C implementation available at:
+// https://ai.stanford.edu/~rubner/emd/default.htm
+
+using System;
 
 namespace EmdFlat
 {
