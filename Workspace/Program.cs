@@ -2,9 +2,43 @@
 using System.Numerics;
 using EmdFlat;
 
-public static class Program
+public static unsafe class Program
 {
     public static unsafe void Main(string[] args)
+    {
+        Example1();
+        Example2();
+    }
+
+    public static void Example1()
+    {
+        Vector3[] f1 =
+        [
+            new(100, 40, 22),
+            new(211, 20, 2),
+            new(32, 190, 150),
+            new(2, 100, 100),
+        ];
+        Vector3[] f2 =
+        [
+            new(0, 0, 0),
+            new(50, 100, 80),
+            new(255, 255, 255),
+        ];
+
+        double[] w1 = [0.4, 0.3, 0.2, 0.1];
+        double[] w2 = [0.5, 0.3, 0.2];
+
+        var s1 = new signature_t<Vector3>(4, f1, w1);
+        var s2 = new signature_t<Vector3>(3, f2, w2);
+
+        var emd = new Emd();
+
+        var value = emd.emd(s1, s2, (x, y) => (x - y).Length(), null, null);
+        Console.WriteLine($"emd={value}");
+    }
+
+    public static void Example2()
     {
         double[][] cost =
         [
@@ -25,16 +59,20 @@ public static class Program
         flow_t[] flow = new flow_t[7];
         int flowSize = 0;
 
-        var emd = new Emd(s1.n, s2.n);
-        double value;
+        var emd = new Emd();
+
         fixed (flow_t* p = flow)
         {
-            value = emd.emd(s1, s2, (x, y) => cost[x][y], p, &flowSize);
+            var value = emd.emd(s1, s2, (x, y) => cost[x][y], p, &flowSize);
+            Console.WriteLine($"emd={value}");
         }
-        Console.WriteLine(value);
+
+        Console.WriteLine();
+        Console.WriteLine($"flow:");
+        Console.WriteLine("from\tto\tamount");
         for (var i = 0; i < flowSize; i++)
         {
-            Console.WriteLine($"{flow[i].from} => {flow[i].to} ({flow[i].amount})");
+            Console.WriteLine($"{flow[i].from}\t{flow[i].to}\t{flow[i].amount}");
         }
     }
 }
